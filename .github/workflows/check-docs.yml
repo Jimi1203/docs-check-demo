@@ -9,38 +9,16 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-      # 1. 检出代码
       - name: Checkout code
         uses: actions/checkout@v3
       
-      # 2. 设置友好的检查标题
-      - name: Start docs check
-        run: echo "��� 开始检查文档质量..."
-      
-      # 3. 安装 Node.js（用于 markdownlint）
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '18'
       
-      # 4. 安装 markdownlint-cli
       - name: Install markdownlint
-        run: |
-          echo "��� 安装 markdownlint..."
-          npm install -g markdownlint-cli
-          markdownlint --version
+        run: npm install -g markdownlint-cli
       
-      # 5. 运行我们的检查脚本
-      - name: Run document checks
-        run: |
-          echo "��� 运行检查脚本..."
-          python3 scripts/check_docs.py
-      
-      # 6. 显示完成信息
-      - name: Check completed
-        run: |
-          if [ $? -eq 0 ]; then
-            echo "��� 文档检查完成！所有检查通过。"
-          else
-            echo "⚠️  文档检查完成，发现一些问题需要修复。"
-          fi
+      - name: Run check script
+        run: python3 scripts/check_docs.py
